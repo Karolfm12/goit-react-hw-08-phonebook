@@ -15,7 +15,7 @@ const ContactListPage = lazy(() => import('../pages/ContactList'));
 
 const contactList = state => state.contacts.contacts;
 const status = state => state.contacts.status;
-const filterState = state => state.contacts.filter;
+// const filterState = state => state.contacts.filter;
 
 export const App = () => {
   const dispatch = useDispatch();
