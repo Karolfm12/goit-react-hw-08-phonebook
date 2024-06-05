@@ -1,16 +1,35 @@
 import { useSelector } from 'react-redux';
-import { contactList } from 'tasksContacts/selectors';
+import { contactList, status } from 'tasksContacts/selectors';
 
 export const ContactList = () => {
   const contacts = useSelector(contactList);
 
   return (
-    <ul>
-      {contacts.map(({ id, text }) => (
-        <li key={id}>
-          <ContactList id={id} text={text} />
-        </li>
-      ))}
-    </ul>
+    <div>
+      {status === 'succeeded' && (
+        <table>
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Phone</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {contacts.map(val => (
+              <tr key={val.id}>
+                <td>{val.name}</td>
+                <td>{val.phone}</td>
+                {/* <td>
+                  { <button onClick={e => handleOnDelete(e, val.id)}>
+              Delete
+            </button> }
+                </td> */}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      )}
+    </div>
   );
 };
