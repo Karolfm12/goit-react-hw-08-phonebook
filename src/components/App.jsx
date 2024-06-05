@@ -13,13 +13,13 @@ const RegisterPage = lazy(() => import('../pages/Register'));
 const LoginPage = lazy(() => import('../pages/Login'));
 const ContactListPage = lazy(() => import('../pages/ContactList'));
 
-const contactList = state => state.contacts.contacts;
-const status = state => state.contacts.status;
 // const filterState = state => state.contacts.filter;
 
 export const App = () => {
   const dispatch = useDispatch();
   const { isRefreshing } = useAuth();
+  const contactList = state => state.contacts.contacts;
+  const status = state => state.contacts.status;
 
   useEffect(() => {
     dispatch(refreshUser());
