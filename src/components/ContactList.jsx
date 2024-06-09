@@ -1,35 +1,52 @@
-import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { Helmet } from 'react-helmet';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchContacts } from 'tasksContacts/operations';
 import { contactList, status } from 'tasksContacts/selectors';
 
 export const ContactList = () => {
+  // const dispatch = useDispatch();
   const contacts = useSelector(contactList);
+  const fetchStatus = useSelector(status);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
-    <div>
-      {status === 'succeeded' && (
-        <table>
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Phone</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {contacts.map(val => (
-              <tr key={val.id}>
-                <td>{val.name}</td>
-                <td>{val.phone}</td>
-                {/* <td>
-                  { <button onClick={e => handleOnDelete(e, val.id)}>
-              Delete
-            </button> }
-                </td> */}
+    <>
+      <Helmet>
+        <title>Your contacts</title>
+      </Helmet>
+      <div>
+        {fetchStatus === 'loading' && 'Request in progress...'}
+        {fetchStatus === 'succeeded' && (
+          <table>
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th>Actionssss</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
-    </div>
+            </thead>
+            <tbody>
+              {contacts.map(contact => (
+                <tr key={contact.id}>
+                  <td>{contact.name}</td>
+                  <td>{contact.phone}</td>
+                  {/* <td>
+                    <button onClick={() => handleOnDelete(contact.id)}>
+                      Delete
+                    </button>
+                  </td> */}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        {fetchStatus === 'failed' && <p>Error fetching contacts.</p>}
+      </div>
+    </>
   );
 };

@@ -22,10 +22,12 @@ const contactSlice = createSlice({
       .addCase(fetchContacts.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.contacts = action.payload;
+        console.log('Contacts fetched successfully:', action.payload);
       })
       .addCase(fetchContacts.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message;
+        console.error('Error fetching contacts:', action.error.message);
       })
       .addCase(addNewContact.pending, state => {
         state.status = 'loading';

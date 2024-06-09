@@ -18,8 +18,6 @@ const ContactListPage = lazy(() => import('../pages/ContactList'));
 export const App = () => {
   const dispatch = useDispatch();
   const { isRefreshing } = useAuth();
-  const contactList = state => state.contacts.contacts;
-  const status = state => state.contacts.status;
 
   useEffect(() => {
     dispatch(refreshUser());
@@ -61,32 +59,6 @@ export const App = () => {
           />
         </Route>
       </Routes>
-      <div>
-        {status === 'succeeded' && (
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {contactList.map(val => (
-                <tr key={val.id}>
-                  <td>{val.name}</td>
-                  <td>{val.phone}</td>
-                  {/* <td>
-                    <button onClick={e => handleOnDelete(e, val.id)}>
-                      Delete
-                    </button>
-                  </td> */}
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        )}
-      </div>
     </>
   );
 };
