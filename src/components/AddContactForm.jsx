@@ -9,9 +9,15 @@ export default function AddContactForm() {
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(addNewContact({ name, phone }));
-    setName('');
-    setPhone('');
+    dispatch(addNewContact({ name, phone }))
+      .unwrap()
+      .then(() => {
+        setName('');
+        setPhone('');
+      })
+      .catch(error => {
+        console.error('Failed to add contact:', error);
+      });
   };
 
   return (
