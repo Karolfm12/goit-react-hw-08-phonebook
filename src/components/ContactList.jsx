@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchContacts } from 'tasksContacts/operations';
+import { DeleteContact, fetchContacts } from 'tasksContacts/operations';
 import { contactList, status } from 'tasksContacts/selectors';
 
 export const ContactList = () => {
@@ -13,6 +13,10 @@ export const ContactList = () => {
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
+
+  const handleDelete = id => {
+    dispatch(DeleteContact(id));
+  };
 
   return (
     <>
@@ -35,11 +39,11 @@ export const ContactList = () => {
                 <tr key={contact.id}>
                   <td>{contact.name}</td>
                   <td>{contact.phone}</td>
-                  {/* <td>
-                    <button onClick={() => handleOnDelete(contact.id)}>
+                  <td>
+                    <button onClick={() => handleDelete(contact.id)}>
                       Delete
                     </button>
-                  </td> */}
+                  </td>
                 </tr>
               ))}
             </tbody>

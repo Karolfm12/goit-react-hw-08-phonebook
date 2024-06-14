@@ -4,6 +4,8 @@ import { lazy, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 
+import AddContactForm from './AddContactForm';
+import { ContactList } from './ContactList';
 import { Layout } from './Layout';
 import { PrivateRoute } from './PrivateRoute';
 import { RestrictedRoute } from './RestrictedRoute';
@@ -11,7 +13,7 @@ import { RestrictedRoute } from './RestrictedRoute';
 const HomePage = lazy(() => import('../pages/Home'));
 const RegisterPage = lazy(() => import('../pages/Register'));
 const LoginPage = lazy(() => import('../pages/Login'));
-const ContactListPage = lazy(() => import('../pages/ContactList'));
+// const ContactListPage = lazy(() => import('../pages/ContactList'));
 
 // const filterState = state => state.contacts.filter;
 
@@ -53,7 +55,12 @@ export const App = () => {
             element={
               <PrivateRoute
                 redirectTo="/login"
-                component={<ContactListPage />}
+                component={
+                  <>
+                    <AddContactForm />
+                    <ContactList />
+                  </>
+                }
               />
             }
           />
