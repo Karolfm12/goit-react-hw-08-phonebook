@@ -38,7 +38,7 @@ export const ContactList = () => {
               {contacts.map(contact => (
                 <tr key={contact.id}>
                   <td>{contact.name}</td>
-                  <td>{contact.phone}</td>
+                  <td>{contact.number}</td>
                   <td>
                     <button onClick={() => handleDelete(contact.id)}>
                       Delete

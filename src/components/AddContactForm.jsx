@@ -4,16 +4,16 @@ import { addNewContact } from 'tasksContacts/operations';
 
 export default function AddContactForm() {
   const [name, setName] = useState('');
-  const [phone, setPhone] = useState('');
+  const [number, setNumber] = useState('');
   const dispatch = useDispatch();
 
   const handleSubmit = e => {
     e.preventDefault();
-    dispatch(addNewContact({ name, phone }))
+    dispatch(addNewContact({ name, number }))
       .unwrap()
       .then(() => {
         setName('');
-        setPhone('');
+        setNumber('');
       })
       .catch(error => {
         console.error('Failed to add contact:', error);
@@ -34,8 +34,8 @@ export default function AddContactForm() {
         Phone:
         <input
           type="text"
-          value={phone}
-          onChange={e => setPhone(e.target.value)}
+          value={number}
+          onChange={e => setNumber(e.target.value)}
         />
       </label>
       <button type="submit">Add Contact</button>
