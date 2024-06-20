@@ -1,3 +1,16 @@
+import {
+  Alert,
+  AlertIcon,
+  Box,
+  Button,
+  Spinner,
+  Table,
+  Tbody,
+  Td,
+  Th,
+  Thead,
+  Tr,
+} from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { Helmet } from 'react-helmet';
 import { useDispatch, useSelector } from 'react-redux';
@@ -5,7 +18,6 @@ import { DeleteContact, fetchContacts } from 'tasksContacts/operations';
 import { contactList, status } from 'tasksContacts/selectors';
 
 export const ContactList = () => {
-  // const dispatch = useDispatch();
   const contacts = useSelector(contactList);
   const fetchStatus = useSelector(status);
   const dispatch = useDispatch();
@@ -23,34 +35,46 @@ export const ContactList = () => {
       <Helmet>
         <title>Your contacts</title>
       </Helmet>
-      <div>
-        {fetchStatus === 'loading' && 'Request in progress...'}
-        {fetchStatus === 'succeeded' && (
-          <table>
-            <thead>
-              <tr>
-                <th>Name</th>
-                <th>Phone</th>
-                <th>Actionssss</th>
-              </tr>
-            </thead>
-            <tbody>
-              {contacts.map(contact => (
-                <tr key={contact.id}>
-                  <td>{contact.name}</td>
-                  <td>{contact.number}</td>
-                  <td>
-                    <button onClick={() => handleDelete(contact.id)}>
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+      <Box p={4}>
+        {fetchStatus === 'loading' && (
+          <Box textAlign="center" mt={4}>
+            <Spinner size="xl" />
+          </Box>
         )}
-        {fetchStatus === 'failed' && <p>Error fetching contacts.</p>}
-      </div>
+        {fetchStatus === 'succeeded' && (
+          <Table variant="striped" colorScheme="teal">
+            <Thead>
+              <Tr>
+                <Th>Name</Th>
+                <Th>Phone</Th>
+                <Th>Actions</Th>
+              </Tr>
+            </Thead>
+            <Tbody>
+              {contacts.map(contact => (
+                <Tr key={contact.id}>
+                  <Td>{contact.name}</Td>
+                  <Td>{contact.number}</Td>
+                  <Td>
+                    <Button
+                      colorScheme="red"
+                      onClick={() => handleDelete(contact.id)}
+                    >
+                      Delete
+                    </Button>
+                  </Td>
+                </Tr>
+              ))}
+            </Tbody>
+          </Table>
+        )}
+        {fetchStatus === 'failed' && (
+          <Alert status="error" mt={4}>
+            <AlertIcon />
+            Error fetching contacts.
+          </Alert>
+        )}
+      </Box>
     </>
   );
 };
